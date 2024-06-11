@@ -1,39 +1,27 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function authorizeMiddleware(
-  req: NextApiRequest,
-  res: NextApiResponse,
-  next: () => void
-): Promise<void> {
-  const accessToken = req.cookies?.accessToken;
-  if (!accessToken) {
-    res
-      .status(401)
-      .json({
-        success: false,
-        message: 'Unauthorized: Access token not found',
-      });
-    return;
-  }
+export async function authorizeMiddleware(req: NextRequest) {
   try {
+    const cookies = req.cookies as any;
+    const accessToken = cookies._parsed.get('accessToken').value; // เข้าถึงค่าของ accessToken ผ่านฟิลด์ value
+    // console.log(accessToken);
+    if (!accessToken) {
+      // throw new Error('Unauthorized: Access token not found');
+      return false;
+    }
     const decode = (await jwt.verify(
       accessToken,
       process.env.JWT_SECRET ?? 'some_dumb_secret'
     )) as JwtPayload;
-    if (!decode) {
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: 'Unauthorized: Invalid access token',
-        });
-      return;
+    console.log(decode);
+
+    if (decode) {
+      console.log('pass');
     }
-    next();
+    return true;
   } catch (error) {
-    res
-      .status(401)
-      .json({ success: false, message: 'Unauthorized: Invalid access token' });
+    console.error('Error verifying access token:', error);
+    return false;
   }
 }

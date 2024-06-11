@@ -42,7 +42,7 @@ export async function POST(req: Request, res: Response) {
     //sign token
     const token = jwt.sign(
       { id: checkUser._id, email: checkUser.email },
-      process.env.JWT_SECREAT || 'somes_dumb_secret',
+      process.env.JWT_SECRET || 'somes_dumb_secret',
       { expiresIn: '1h' }
     );
     // Set cookie
