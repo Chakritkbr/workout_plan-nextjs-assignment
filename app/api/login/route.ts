@@ -19,20 +19,22 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+
   try {
     //check User in db
     const checkUser = await User.findOne({ email });
     if (!checkUser) {
       return NextResponse.json(
-        { success: true, message: 'User not found' },
+        { success: false, message: 'User not found' },
         { status: 404 }
       );
     }
+
     //compare password
-    const isMatch = await bcrypt.compare(password, checkUser.hashedPassword);
+    const isMatch = await bcrypt.compare(password, checkUser.password);
     if (!isMatch) {
       return NextResponse.json(
-        { success: true, message: 'User not found' },
+        { success: false, message: 'Incorrect password' },
         { status: 409 }
       );
     }
@@ -40,9 +42,9 @@ export async function POST(req: Request) {
     const token = jwt.sign(
       { id: checkUser._id, email: checkUser.email },
       process.env.JWT_SECREAT || 'somes_dumb_secret',
-      { expiresIn: '1d' }
+      { expiresIn: '1h' }
     );
-
+    // console.log(token);
     return NextResponse.json(
       {
         success: true,
