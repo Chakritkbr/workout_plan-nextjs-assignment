@@ -10,6 +10,7 @@ export async function POST(req: Request, res: Response) {
   await dbConnect();
 
   const { email, password } = await req.json();
+  console.log(email);
   const { error } = validateData({ email, password });
   if (error) {
     return NextResponse.json(

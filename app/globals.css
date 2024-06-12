@@ -2,32 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
+/* Define custom classes */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .bg-primary {
+    background-color: #f5385d;
   }
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* ทำให้ container เต็มความสูงของหน้าจอ */
+}
+
+.input-email,
+.input-password {
+  @apply w-full border my-1 py-2 px-3 rounded-2xl;
+}
+
+textarea {
+  height: 140px;
+}
+
+/* Styles for button elements */
+button.dropdown {
+  @apply bg-[#F1A5A8]  text-white p-1 px-2 rounded-md;
+}
+
+.dropdown-menu {
+  @apply absolute right-0 mt-40 mr-4 w-20 bg-white rounded shadow-lg z-10;
+}
+
+/* Apply the custom class */
+button.primary {
+  @apply bg-primary p-2 w-full rounded-2xl text-white;
 }
