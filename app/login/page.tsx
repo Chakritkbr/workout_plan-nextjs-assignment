@@ -1,16 +1,20 @@
 'use client';
 import axios from 'axios';
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
+import { UserContext } from '../provider/context';
 
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { user, setUser } = useContext(UserContext);
 
   async function handleLogin(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     try {
       const { data } = await axios.post('/api/login', { email, password });
+      console.log(data.user);
+      setUser(data.user);
       alert('Login Successful');
     } catch (error) {
       alert('Login failed');
@@ -46,6 +50,9 @@ export default function Home() {
             </Link>
           </div>
         </form>
+        {user && (
+          <div className='text-center py-2'>User: {JSON.stringify(user)}</div>
+        )}
       </div>
     </div>
   );

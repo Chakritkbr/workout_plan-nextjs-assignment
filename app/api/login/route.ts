@@ -10,7 +10,8 @@ export async function POST(req: Request, res: Response) {
   await dbConnect();
 
   const { email, password } = await req.json();
-  console.log(email);
+
+  // Validate data (already implemented)
   const { error } = validateData({ email, password });
   if (error) {
     return NextResponse.json(
@@ -23,7 +24,7 @@ export async function POST(req: Request, res: Response) {
   }
 
   try {
-    //check User in db
+    // Check user in DB
     const checkUser = await User.findOne({ email });
     if (!checkUser) {
       return NextResponse.json(
@@ -32,7 +33,7 @@ export async function POST(req: Request, res: Response) {
       );
     }
 
-    //compare password
+    // Compare password
     const isMatch = await bcrypt.compare(password, checkUser.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -40,29 +41,36 @@ export async function POST(req: Request, res: Response) {
         { status: 409 }
       );
     }
-    //sign token
+
+    // Sign token with userId and email
     const token = jwt.sign(
       { id: checkUser._id, email: checkUser.email },
       process.env.JWT_SECRET || 'somes_dumb_secret',
       { expiresIn: '1h' }
     );
-    // Set cookie
+
+    // Set cookie (already implemented)
     cookies().set('accessToken', token, {
       maxAge: 300,
       httpOnly: true,
-      secure: false,
+      secure: false, // Adjust based on your security requirements
     });
-    // console.log(token);
+
+    // Return successful response with userId and email
     return NextResponse.json(
       {
         success: true,
-        message: 'User Login Successfull',
+        message: 'User Login Successful',
         accessToken: token,
+        user: {
+          userId: checkUser._id, // Include userId in the response
+          email: checkUser.email, // Include email in the response
+        },
       },
       { status: 200 }
     );
   } catch (error) {
-    console.log('Error in register (server) => ', error);
+    console.log('Error in Login (server) => ', error);
     return NextResponse.json(
       {
         success: false,
