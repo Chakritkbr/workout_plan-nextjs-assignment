@@ -10,6 +10,8 @@ interface PersonalInfoData {
   height: number;
   weight: number;
   weeklyActivities: string[];
+  workoutGoal: string;
+  workoutPlan: string;
 }
 
 export async function GET(
@@ -54,6 +56,8 @@ export async function GET(
         height: info.height,
         weight: info.weight,
         weeklyActivities: info.weeklyActivities,
+        workoutGoal: info.workoutGoal,
+        workoutPlan: info.workoutPlan,
       })
     );
 

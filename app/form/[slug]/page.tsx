@@ -23,7 +23,8 @@ export default function Form() {
     weeklyActivities: [],
     newActivity: '',
     workoutGoal: '',
-    workoutPlan: 'adasdasdasdasdasdasdasdas',
+    workoutPlan:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci explicabo deserunt, magnam nisi similique accusamus architecto nesciunt ut perferendis, ad reiciendis excepturi odit fugiat obcaecati consectetur molestias repellat vitae facere.',
   });
 
   const [showForm2, setShowForm2] = useState<boolean>(false);
@@ -61,7 +62,7 @@ export default function Form() {
     }));
   };
 
-  const handlecheckForm1 = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handlecheckForm1 = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Validate Form 1
     if (

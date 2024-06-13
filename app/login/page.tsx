@@ -11,6 +11,13 @@ export default function Login() {
 
   async function handleLogin(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
+
+    // Check password length
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
+    }
+
     try {
       const { data } = await axios.post('/api/login', { email, password });
       console.log(data.user);
@@ -21,6 +28,7 @@ export default function Login() {
       alert('Login failed');
     }
   }
+
   return (
     <div className='container'>
       <div className='mb-64'>
@@ -45,7 +53,7 @@ export default function Login() {
           </button>
 
           <div className='text-center py-2 text-gray-500'>
-            Dont have an account yet?{' '}
+            <p>Dont have an account yet?</p>
             <Link className='underline hover:text-black' href={'/register'}>
               Register now
             </Link>

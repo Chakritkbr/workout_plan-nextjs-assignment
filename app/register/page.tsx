@@ -3,12 +3,19 @@ import axios from 'axios';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   async function handleRegister(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
+
+    // Check password length
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
+    }
+
     try {
       const { data } = await axios.post('/api/register', { email, password });
       alert('Register Successful');
@@ -17,6 +24,7 @@ export default function Login() {
       alert('Register failed');
     }
   }
+
   return (
     <div className='container'>
       <div className='mb-64'>

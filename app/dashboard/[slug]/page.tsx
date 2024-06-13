@@ -58,6 +58,14 @@ export default function DashboardPage() {
                       <span className='font-bold'>Weekly Activities:</span>{' '}
                       {item.weeklyActivities.join(', ')}
                     </p>
+                    <p className='text-lg'>
+                      <span className='font-bold'>Workout Goal:</span>{' '}
+                      {item.workoutGoal}
+                    </p>
+                    <p className='text-lg'>
+                      <span className='font-bold'>Workout Plan:</span>{' '}
+                      {item.workoutPlan}
+                    </p>
                   </div>
                 ))}
               </div>
