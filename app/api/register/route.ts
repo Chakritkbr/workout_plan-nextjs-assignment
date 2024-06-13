@@ -4,13 +4,6 @@ import User from '@/app/models/User';
 import bcrypt from 'bcrypt';
 import { validateData } from '../utils/validation';
 
-// export async function GET(req: Request, res: Response) {
-//   const data = {
-//     text: 'hello JOJO',
-//   };
-//   return NextResponse.json(data);
-// }
-
 export async function POST(req: Request) {
   await dbConnect();
 

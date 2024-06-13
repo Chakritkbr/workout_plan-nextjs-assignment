@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FormEvent, useContext, useState } from 'react';
 import { UserContext } from '../provider/context';
 
-export default function Home() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { user, setUser } = useContext(UserContext);
@@ -16,6 +16,7 @@ export default function Home() {
       console.log(data.user);
       setUser(data.user);
       alert('Login Successful');
+      window.location.href = `/dashboard/${user?.userId}`;
     } catch (error) {
       alert('Login failed');
     }

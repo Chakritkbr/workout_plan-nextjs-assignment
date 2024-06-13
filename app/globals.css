@@ -37,3 +37,22 @@ button.dropdown {
 button.primary {
   @apply bg-primary p-2 w-full rounded-2xl text-white;
 }
+
+button.goals {
+  @apply bg-primary p-2 w-full rounded-2xl text-white;
+}
+
+button.formBtn {
+  @apply bg-black primary my-1 p-2 w-full rounded-2xl text-white;
+}
+button.formBtnNext {
+  @apply bg-yellow-500  primary my-1   p-2 w-full rounded-2xl text-white;
+}
+button.formBtnGen {
+  @apply bg-blue-400  primary my-1   p-2 w-full rounded-2xl text-white;
+}
+button.formBtnSave {
+  @apply bg-green-500  primary my-1  mb-8 p-2 w-full rounded-2xl text-white;
+}
+
+/* PersonalInformationForm.module.css */

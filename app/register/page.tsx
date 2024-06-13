@@ -3,7 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
-export default function Home() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -11,9 +11,10 @@ export default function Home() {
     ev.preventDefault();
     try {
       const { data } = await axios.post('/api/register', { email, password });
-      alert('Login Successful');
+      alert('Register Successful');
+      window.location.href = '/login';
     } catch (error) {
-      alert('Login failed');
+      alert('Register failed');
     }
   }
   return (

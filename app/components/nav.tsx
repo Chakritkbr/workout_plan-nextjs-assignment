@@ -1,13 +1,19 @@
 'use client';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
 import { UserContext } from '../provider/context';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
+  // กำหนดข้อความทักทายตัวผู้ใช้
+  const greetingText = user
+    ? `Hi !!! ${user.email}`
+    : 'Hi!!! People who are going to be in shape';
+
+  // ฟังก์ชันสำหรับการออกจากระบบ
   const handleLogout = async () => {
     try {
       await axios.post('/api/logout');
@@ -16,25 +22,24 @@ export default function Navbar() {
       console.error('failed to log out', error);
     }
   };
+
+  // ปิดเมนู dropdown เมื่อคลิกที่รายการเมนู
   const handleItemClick = () => {
     setIsOpen(false);
   };
+
   return (
     <nav className='bg-primary p-4 flex justify-between items-center'>
-      {/* Far Left */}
+      {/* ส่วนทางซ้าย */}
       <div>
         <span className='text-white text-lg font-semibold'>Workout Plan</span>
       </div>
 
-      {/* Far Right */}
+      {/* ส่วนทางขวา */}
       <div className='flex items-center'>
-        {/* name and Icon dropdown */}
-        <p className='text-white px-4'>
-          {user
-            ? `Hi !!! ${user.email}`
-            : 'Hi!!! People who are going to be in shape'}
-        </p>
-        <button onClick={() => setIsOpen(!isOpen)} className='dropdown '>
+        {/* ข้อความทักทายและปุ่ม dropdown */}
+        <p className='text-white px-4'>{greetingText}</p>
+        <button onClick={() => setIsOpen(!isOpen)} className='dropdown'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -52,7 +57,8 @@ export default function Navbar() {
 
           <i className={`fas ${isOpen ? 'fa-caret-up' : 'fa-caret-down'}`}></i>
         </button>
-        {/* Dropdown menu */}
+
+        {/* เมนู dropdown */}
         {isOpen && (
           <div className='dropdown-menu'>
             <ul className='py-2'>
@@ -62,7 +68,7 @@ export default function Navbar() {
                     className='text-center border-b py-1'
                     onClick={handleItemClick}
                   >
-                    <Link href='/dashboard'>Dashboard</Link>
+                    <Link href={`/dashboard/${user.userId}`}>Dashboard</Link>
                   </li>
                   <li className='text-center py-1' onClick={handleItemClick}>
                     <Link href='/' onClick={handleLogout}>
