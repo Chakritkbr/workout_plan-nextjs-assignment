@@ -7,6 +7,8 @@ export interface IPersonalInfo extends Document {
   height: number;
   weight: number;
   weeklyActivities: string[];
+  workoutGoal?: string;
+  workoutPlan?: string;
 }
 
 const personalInfoSchema: Schema = new Schema({
@@ -34,6 +36,14 @@ const personalInfoSchema: Schema = new Schema({
   weeklyActivities: {
     type: [String],
     required: true,
+  },
+  workoutGoal: {
+    type: String,
+    default: '', // Optional field, provide default value if needed
+  },
+  workoutPlan: {
+    type: String,
+    default: '', // Optional field, provide default value if needed
   },
 });
 

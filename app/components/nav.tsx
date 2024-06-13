@@ -18,6 +18,7 @@ export default function Navbar() {
     try {
       await axios.post('/api/logout');
       setUser(null);
+      window.location.href = '/login';
     } catch (error) {
       console.error('failed to log out', error);
     }

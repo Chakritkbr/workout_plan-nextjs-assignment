@@ -1,4 +1,5 @@
 import dbConnect from '@/app/DB/connectDB';
+import { authorizeMiddleware } from '@/app/middlewares/auth';
 import PersonalInfo from '@/app/models/PersonalInfo';
 import User from '@/app/models/User';
 import { NextRequest, NextResponse } from 'next/server';
@@ -19,6 +20,16 @@ export async function GET(
 
   try {
     await dbConnect();
+    const isAuthenticated = await authorizeMiddleware(req);
+    if (!isAuthenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Access token invalid or expired',
+        },
+        { status: 401 }
+      );
+    }
 
     const checkUser = await User.findById(userId);
     if (!checkUser) {
@@ -37,6 +48,7 @@ export async function GET(
     }
     const formattedPersonalInfos: PersonalInfoData[] = personalInfos.map(
       (info) => ({
+        planId: info._id,
         planName: info.planName,
         dateOfBirth: info.dateOfBirth.toISOString(),
         height: info.height,

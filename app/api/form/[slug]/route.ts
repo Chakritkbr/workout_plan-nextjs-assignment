@@ -1,12 +1,16 @@
 import dbConnect from '@/app/DB/connectDB';
-import PersonalInfo, { IPersonalInfo } from '@/app/models/PersonalInfo';
-import { NextRequest, NextResponse } from 'next/server';
 import { authorizeMiddleware } from '@/app/middlewares/auth';
+import PersonalInfo, { IPersonalInfo } from '@/app/models/PersonalInfo';
+import User from '@/app/models/User';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const userId = params.slug;
   try {
     await dbConnect();
-
     const isAuthenticated = await authorizeMiddleware(req);
     if (!isAuthenticated) {
       return NextResponse.json(
@@ -17,9 +21,33 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     }
-    const { userId, planName, dateOfBirth, height, weight, weeklyActivities } =
-      await req.json();
-    // Create a new PersonalInfo instance
+    const checkUser = await User.findById(userId);
+    if (!checkUser) {
+      return NextResponse.json(
+        { success: false, message: 'User not found' },
+        { status: 404 }
+      );
+    }
+
+    const {
+      planName,
+      dateOfBirth,
+      height,
+      weight,
+      weeklyActivities,
+      workoutGoal,
+      workoutPlan,
+    } = await req.json();
+    console.log(
+      planName,
+      dateOfBirth,
+      height,
+      weight,
+      weeklyActivities,
+      workoutGoal,
+      workoutPlan
+    );
+
     const newPersonalInfo: IPersonalInfo = new PersonalInfo({
       userId,
       planName,
@@ -27,12 +55,14 @@ export async function POST(req: NextRequest) {
       height,
       weight,
       weeklyActivities,
+      workoutGoal,
+      workoutPlan,
     });
     await newPersonalInfo.save();
     return NextResponse.json(
       {
         success: true,
-        message: 'PersonalInfo created successfully',
+        message: 'PersonalInfo created successfully 555',
         data: newPersonalInfo,
       },
       { status: 201 }

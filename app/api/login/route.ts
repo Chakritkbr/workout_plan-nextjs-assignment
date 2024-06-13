@@ -51,7 +51,7 @@ export async function POST(req: Request, res: Response) {
 
     // Set cookie (already implemented)
     cookies().set('accessToken', token, {
-      maxAge: 300,
+      maxAge: 2 * 60 * 60, // 2 hours in seconds maxAge: 300,
       httpOnly: true,
       secure: false, // Adjust based on your security requirements
     });

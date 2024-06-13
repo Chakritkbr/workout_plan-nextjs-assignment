@@ -43,16 +43,16 @@ button.goals {
 }
 
 button.formBtn {
-  @apply bg-black primary my-1 p-2 w-full rounded-2xl text-white;
+  @apply bg-black  my-1 p-2 w-full rounded-2xl text-white;
 }
 button.formBtnNext {
-  @apply bg-yellow-500  primary my-1   p-2 w-full rounded-2xl text-white;
+  @apply bg-yellow-500   my-1   p-2 w-full rounded-2xl text-white;
 }
 button.formBtnGen {
-  @apply bg-blue-400  primary my-1   p-2 w-full rounded-2xl text-white;
+  @apply bg-blue-400   my-1   p-2 w-full rounded-2xl text-white;
 }
 button.formBtnSave {
-  @apply bg-green-500  primary my-1  mb-8 p-2 w-full rounded-2xl text-white;
+  @apply bg-green-500   my-1  mb-8 p-2 w-full rounded-2xl text-white;
 }
 
 /* PersonalInformationForm.module.css */

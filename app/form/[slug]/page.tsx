@@ -1,7 +1,7 @@
-// Dashboard.tsx
 'use client';
+import { UserContext } from '@/app/provider/context';
 import axios from 'axios';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 
 interface FormData {
   planName: string;
@@ -14,7 +14,7 @@ interface FormData {
   workoutPlan: string;
 }
 
-export default function Dashboard() {
+export default function Form() {
   const [formData, setFormData] = useState<FormData>({
     planName: '',
     dateOfBirth: '',
@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [showForm2, setShowForm2] = useState<boolean>(false);
   const [showForm3, setShowForm3] = useState<boolean>(false);
   const [form1Valid, setForm1Valid] = useState<boolean>(false);
+  const { user } = useContext(UserContext);
 
   const form2Ref = useRef<HTMLDivElement>(null);
   const form3Ref = useRef<HTMLDivElement>(null);
@@ -89,9 +90,10 @@ export default function Dashboard() {
   ): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/form', formData); // Update API endpoint to match your backend
+      const response = await axios.post(`/api/form/${user?.userId}`, formData); // Update API endpoint to match your backend
       console.log('Server response:', response.data);
       alert('Data saved successfully!');
+      window.location.href = `/dashboard/${user?.userId}`;
     } catch (error) {
       console.error('Error saving data:', error);
       alert('Failed to save data. Please try again.');
@@ -113,7 +115,7 @@ export default function Dashboard() {
   }, [showForm2, showForm3]);
 
   return (
-    <div className='mt-8'>
+    <div className='mt-8 flex justify-center'>
       <div className=''>
         <h1 className='text-4xl text-center mb-4'>Dashboard</h1>
         <form className='max-w-md mx-auto ' onSubmit={handlecheckForm1}>
@@ -207,7 +209,7 @@ export default function Dashboard() {
         </form>
 
         {/* Form 2: Workout Goal */}
-        <div className='mt-8'>
+        <div className='mt-8 '>
           {showForm2 && (
             <div ref={form2Ref}>
               <h2 className='text-xl mb-4'>Form 2: Workout Goal</h2>

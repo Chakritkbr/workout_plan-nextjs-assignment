@@ -103,7 +103,9 @@ export default function DashboardPage() {
               <p className='text-lg'>No personal data available.</p>
             )}
           </div>
-          <button className='formBtnGen'>Make Plan</button>
+          <Link href={`/form/${user?.userId}`}>
+            <button className='formBtnGen'>Make a Plan</button>
+          </Link>
         </div>
       </div>
     </div>

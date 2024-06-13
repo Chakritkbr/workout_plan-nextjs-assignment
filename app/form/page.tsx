@@ -112,7 +112,7 @@ export default function Form() {
   }, [showForm2, showForm3]);
 
   return (
-    <div className='mt-8'>
+    <div className='mt-8 flex justify-center'>
       <div className=''>
         <h1 className='text-4xl text-center mb-4'>Dashboard</h1>
         <form className='max-w-md mx-auto ' onSubmit={handlecheckForm1}>
@@ -206,7 +206,7 @@ export default function Form() {
         </form>
 
         {/* Form 2: Workout Goal */}
-        <div className='mt-8'>
+        <div className='mt-8 '>
           {showForm2 && (
             <div ref={form2Ref}>
               <h2 className='text-xl mb-4'>Form 2: Workout Goal</h2>
