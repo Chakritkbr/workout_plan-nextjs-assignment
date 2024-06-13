@@ -1,5 +1,5 @@
 # Workout Plan (Next.js)
-
+This is an assignment 
 Welcome to Workout Plan! This project utilizes Next.js for server-side rendering and React for front-end development. It includes backend functionalities using MongoDB with Mongoose for data modeling.
 
 ## Getting Started
