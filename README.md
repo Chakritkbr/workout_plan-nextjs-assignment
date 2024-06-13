@@ -44,7 +44,7 @@ Make sure you have the following installed on your development machine:
 
    ```plaintext
    MONGO_URI=mongodb://localhost:27018/Workout-plan
-   JWT_SECRET=
+   JWT_SECRET=SAMPLESECRET
    ```
 
    Replace `mongodb://localhost:27018/Workout-plan` with your MongoDB connection URI. Ensure MongoDB is running on `localhost` and listening on port `27018`.
