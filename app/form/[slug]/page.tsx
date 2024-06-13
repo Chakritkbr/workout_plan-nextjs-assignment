@@ -24,13 +24,12 @@ export default function Form() {
     newActivity: '',
     workoutGoal: '',
     workoutPlan:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci explicabo deserunt, magnam nisi similique accusamus architecto nesciunt ut perferendis, ad reiciendis excepturi odit fugiat obcaecati consectetur molestias repellat vitae facere.',
+      ' Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iusto esse enim sapiente doloribus. Officia neque dignissimos officiis repudiandae dolores quidem, eum vitae eligendi fugit blanditiis. Velit minima placeat sint totam',
   });
-
   const [showForm2, setShowForm2] = useState<boolean>(false);
   const [showForm3, setShowForm3] = useState<boolean>(false);
   const [form1Valid, setForm1Valid] = useState<boolean>(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const form2Ref = useRef<HTMLDivElement>(null);
   const form3Ref = useRef<HTMLDivElement>(null);
@@ -62,7 +61,7 @@ export default function Form() {
     }));
   };
 
-  const handlecheckForm1 = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlecheckForm1 = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     // Validate Form 1
     if (
@@ -94,7 +93,6 @@ export default function Form() {
       const response = await axios.post(`/api/form/${user?.userId}`, formData); // Update API endpoint to match your backend
       console.log('Server response:', response.data);
       alert('Data saved successfully!');
-      window.location.href = `/dashboard/${user?.userId}`;
     } catch (error) {
       console.error('Error saving data:', error);
       alert('Failed to save data. Please try again.');
